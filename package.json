@@ -1,5 +1,5 @@
 {
-  "name": "my-book-search-engine",
+  "name": "googlebooks-app",
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
@@ -12,15 +12,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jak3ster/My-Book-Search-Engine.git"
+    "url": "git@work.github.com:arosenkranz/googlebooks-app.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jak3ster/My-Book-Search-Engine/issues"
-  },
-  "homepage": "https://github.com/jak3ster/My-Book-Search-Engine#readme",
   "dependencies": {
     "if-env": "^1.0.4"
   },

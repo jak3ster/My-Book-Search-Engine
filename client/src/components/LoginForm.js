@@ -1,53 +1,46 @@
 // see SignupForm.js for comments
 import React, { useState } from 'react';
-import Auth from '../utils/auth';
-import { Form, Button, Alert } from 'react-bootstrap';
-
-import { LOGIN_USER } from '../utils/mutations';
 import { useMutation } from '@apollo/react-hooks';
-// import { loginUser } from '../utils/API';
-
+import { Form, Button, Alert } from 'react-bootstrap';
+import { LOGIN_USER } from '../utils/mutations';
+import Auth from '../utils/auth';
 
 const LoginForm = () => {
-  const [login, { error }] = useMutation(LOGIN_USER);
+  // set initial form state
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
+
+  const [login] = useMutation(LOGIN_USER);
+
+  // set state for form validation
   const [validated] = useState(false);
+  // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setUserFormData({
-      ...userFormData,
-      [name]: value
-    });
+    setUserFormData({ ...userFormData, [name]: value });
   };
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     // check if form has everything (as per react-bootstrap docs)
-    // const form = event.currentTarget;
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
     try {
       const { data } = await login({
         variables: { ...userFormData }
       });
+      console.log(data);
+
       Auth.login(data.login.token);
-      // const response = await loginUser(userFormData);
 
-      // if (!response.ok) {
-      //   throw new Error('something went wrong!');
-      // }
-
-      // const { token, user } = await response.json();
-      // console.log(user);
-      // Auth.login(token);
-    } catch (err) {
-      console.error(err);
+    } catch (e) {
+      console.error(e);
       setShowAlert(true);
     }
 
@@ -95,7 +88,6 @@ const LoginForm = () => {
           variant='success'>
           Submit
         </Button>
-        {error && <div>Login failed</div>}
       </Form>
     </>
   );
